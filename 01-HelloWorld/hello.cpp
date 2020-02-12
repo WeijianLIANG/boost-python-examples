@@ -5,7 +5,7 @@ char const* greet()
 
 #include <boost/python.hpp>
 
-BOOST_PYTHON_MODULE(hello)
+BOOST_PYTHON_MODULE(libhello)
 {
     using namespace boost::python;
     def("greet", greet);
