@@ -5,9 +5,10 @@
 #include <string>
 #include <sstream>
 #include <vector>
-
-struct World
+#include <iostream>
+class World
 {
+public:
     void set(std::string msg) { mMsg = msg; }
     void many(boost::python::list msgs) {
         long l = len(msgs);
@@ -20,16 +21,34 @@ struct World
         mMsg = ss.str();
     }
     std::string greet() { return mMsg; }
+    void set_strain(boost::python::list strain_list)
+    {
+        int a = len(strain_list);
+        for (int i =0; i < a;i++)
+        {
+            strain_list_.push_back(boost::python::extract<double>(strain_list[i]));
+        }
+    }
+    void show_strain()
+    {
+        int a = strain_list_.size();
+        for (int i=0;i<a;i++) std::cout <<strain_list_.at(i)<<"\n";
+        
+    }
+private:
     std::string mMsg;
+    std::vector<double> strain_list_;
 };
 
-using namespace boost::python;
+// using namespace boost::python;
 
 BOOST_PYTHON_MODULE(classes)
 {
-    class_<World>("World")
+    boost::python::class_<World>("World")
         .def("greet", &World::greet)
         .def("set", &World::set)
         .def("many", &World::many)
+        .def("set_strain",&World::set_strain)
+        .def("show_strain",&World::show_strain)
     ;
 };

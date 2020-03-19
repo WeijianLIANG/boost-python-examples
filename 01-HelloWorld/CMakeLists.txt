@@ -5,11 +5,11 @@ find_package(PythonLibs 2.7 REQUIRED)
 find_package(Boost COMPONENTS python REQUIRED)
 
 # Without this, any build libraries automatically have names "lib{x}.so"
-set(CMAKE_SHARED_MODULE_PREFIX "")
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
 
 # Add a shared module - modules are intended to be imported at runtime.
 # - This is where you add the source files
-add_library(hello MODULE hello.cpp)
+add_library(hello SHARED hello.cpp)
 
 # Set up the libraries and header search paths for this target
 target_link_libraries(hello ${Boost_LIBRARIES} ${PYTHON_LIBRARIES})
